@@ -59,3 +59,7 @@ Além disso, a estratégia de Mensageria com Kafka também pode ser levada em co
 O código será construídos em cima de mecanismos e padrões de rollback, como o Unit Of Word, para garantir que transações parcialmente completadas possam ser revertidas em caso de falhas.
 
 Além disso, o sistema de mensageria pode garantir a comunicação assertiva de eventos entre os microsserviços para que a informação seja repassado entre todos.
+
+## 6. Representação Gráfica da arquitetura proposta
+
+![architecture](architecture.png)
