@@ -14,7 +14,7 @@ Antes de tomar as decisões técnicas, acredito que o primeiro passo seria reali
 
 Uma arquitetura de microsserviços nos permite escalar diferentes partes de um sistema de forma independente.
 
-- Serviços principais: Autenticação (authentication/auth), Ingressos (tickets), Pagamentos (payments), Relatórios (reports).
+- Serviços principais: Autenticação (authentication/auth), Eventos (events), Pagamentos (payments), Relatórios (reports).
 
 ### 2.2 Cache distribuído
 
