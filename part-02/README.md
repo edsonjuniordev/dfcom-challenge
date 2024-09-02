@@ -57,6 +57,7 @@ docker compose up
 - A implementação não usou todos os recursos propostos na arquitetura pois foi solicitado o uso de Nestjs e MongoDB, além de não adicionar complexidade no desenvolvimento do teste.
 - A demora para subir os containers faz com que alguns logs de erros apareçam na aplicação, porém é apenas tentatica de se conectar ao kafka, quando o container sobe os logs encerram.
 - A parte de autenticação com login foi feita pensando apenas no funcionamento da aplicação, fica como ponto de melhoria implementar uma autenticação verdadeira.
+- Você pode acompanhar o status e as mensagens do Kafka com o `constrol-center` disponibilizado na porta `9021` local.
 
 ## 📈 Pontos de melhoria
 
