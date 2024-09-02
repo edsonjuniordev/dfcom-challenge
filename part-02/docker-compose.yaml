@@ -32,7 +32,7 @@ services:
       - kafka
     environment:
       - KAFKA_BROKER=kafka:9092
-      - EVENTS_MONGO_DATABASE_URL=mongodb+srv://dev:qwsaj123@cluster0.8vdwj.mongodb.net/dfcom-challenge?retryWrites=true&w=majority&appName=Cluster0
+      - MONGO_DATABASE_URL=<your-mongodb-url>
       - JWT_SECRET=SECRET
       - DEFAULT_USER_ID=4a18059e-10f1-4743-830d-9efbfc2d4387
     command: npm run start:dev

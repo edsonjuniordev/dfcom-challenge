@@ -15,7 +15,7 @@ import { MongoUnityOfWork } from "./unity-of-work/unity-of-work.mongo";
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get('EVENTS_MONGO_DATABASE_URL'),
+        uri: configService.get('MONGO_DATABASE_URL'),
       }),
     }),
     MongooseModule.forFeature([
