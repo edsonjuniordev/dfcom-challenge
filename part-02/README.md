@@ -53,7 +53,7 @@ docker compose up
 ## ⚠️ Pontos de atenção
 
 - Foi utilizado Nestjs com uma abordagem modularizada com alguns recursos compartilhados, isso possibilita rodar cada módulo junto ou independente e também facilita posteriormente a remoção de cada módulo para um microsserviço independente.
-- Como a aplicação utiliza o recurso de `transaction` do mongodb foi necessário usar uma instância external para não adicionar complexidade de build na aplicação.
+- Como a aplicação utiliza o recurso de `transaction` do mongodb foi necessário usar uma instância externa para não adicionar complexidade de build na aplicação.
 - A implementação não usou todos os recursos propostos na arquitetura pois foi solicitado o uso de Nestjs e MongoDB, além de não adicionar complexidade no desenvolvimento do teste.
 - A demora para subir os containers faz com que alguns logs de erros apareçam na aplicação, porém é apenas tentatica de se conectar ao kafka, quando o container sobe os logs encerram.
 - A parte de autenticação com login foi feita pensando apenas no funcionamento da aplicação, fica como ponto de melhoria implementar uma autenticação verdadeira.
