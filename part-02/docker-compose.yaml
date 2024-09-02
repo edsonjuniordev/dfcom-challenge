@@ -1,15 +1,6 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - '27017:27017'
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -35,15 +26,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: app
-    # network_mode: host
     ports:
       - "3000:3000"
     depends_on:
       - kafka
-      - mongodb
     environment:
       - KAFKA_BROKER=kafka:9092
-      - EVENTS_MONGO_DATABASE_URL=mongodb://root:root@mongodb:27017/events?authSource=admin
+      - EVENTS_MONGO_DATABASE_URL=mongodb+srv://dev:qwsaj123@cluster0.8vdwj.mongodb.net/dfcom-challenge?retryWrites=true&w=majority&appName=Cluster0
       - JWT_SECRET=SECRET
       - DEFAULT_USER_ID=4a18059e-10f1-4743-830d-9efbfc2d4387
     command: npm run start:dev

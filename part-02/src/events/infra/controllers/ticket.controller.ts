@@ -1,6 +1,6 @@
 import { Body, Controller, InternalServerErrorException, Post, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "./auth.guard";
-import { CreateTicketUsecaseProvider } from "./providers/create-ticket.provider";
+import { CreateTicketUsecaseProvider } from "../providers/create-ticket.provider";
 import { CreateTicketRequest, CreateTicketResponse } from "./dtos/create-ticket.dto";
 import { CreateTicketInputDto } from "@events/application/usecases/create-ticket/create-ticket.dto";
 import { ActiveUserId } from "./decorators/is.active.user.id";

@@ -4,20 +4,23 @@ import { CreateTicketBuildDto, CreateTicketInputDto, CreateTicketOutputDto } fro
 import { Ticket } from "@events/application/domain/entities/ticket.entity";
 import { Messaging } from "@events/application/messaging/messaging";
 import { TicketRepository } from "@events/application/repositories/ticket.repository";
+import { UnityOfWork } from "@shared/unity-of-work/unity-of-work";
 
 export class CreateTicketUsecase implements Usecase<CreateTicketInputDto, CreateTicketOutputDto> {
   private constructor(
     private readonly eventRepository: EventRepository,
     private readonly ticketRepository: TicketRepository,
-    private readonly messaging: Messaging
+    private readonly messaging: Messaging,
+    private readonly unityOfWork: UnityOfWork,
   ) { }
 
   public static build({
     eventRepository,
     ticketRepository,
-    messaging
+    messaging,
+    unityOfWork
   }: CreateTicketBuildDto): CreateTicketUsecase {
-    return new CreateTicketUsecase(eventRepository, ticketRepository, messaging);
+    return new CreateTicketUsecase(eventRepository, ticketRepository, messaging, unityOfWork);
   }
 
   public async execute({
@@ -36,9 +39,12 @@ export class CreateTicketUsecase implements Usecase<CreateTicketInputDto, Create
     }
 
     try {
+      await this.unityOfWork.start();
+
       event.ticketReservation();
 
-      await this.eventRepository.update(event);
+      const updateEventWork = this.eventRepository.update(event);
+      this.unityOfWork.addWork(updateEventWork);
 
       const ticket = Ticket.create({
         userId,
@@ -47,18 +53,22 @@ export class CreateTicketUsecase implements Usecase<CreateTicketInputDto, Create
         customerEmail,
       });
 
-      await this.ticketRepository.create(ticket);
+      const createTicketWork = this.ticketRepository.create(ticket);
+      this.unityOfWork.addWork(createTicketWork);
+      
+      await this.unityOfWork.commit();
 
       await this.messaging.sendTicketCreatedEvent(ticket);
-
+      
       const output = this.toOutput(ticket);
 
       return output;
     } catch (error) {
-      event.releaseTicketReservation();
-      await this.eventRepository.update(event);
+      console.log("🚀 ~ CreateTicketUsecase error:", error)
+
+      await this.unityOfWork.abort();
       
-      throw new Error(`Something went wrong while creating ticket for event ${eventId}`);
+      throw new Error(`Something went wrong while creating ticket for event ${eventId} - ${error.message}`);
     } finally {
       await this.eventRepository.unlock(eventId);
     }

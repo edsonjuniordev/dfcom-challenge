@@ -1,6 +1,6 @@
 import { EventRepository } from "@events/application/repositories/event.repository";
 import { ListEventsBuildDto, ListEventsOutputDto } from "./list-events.dto";
-import { DateGenerator } from "@events/utils/date-generator";
+import { DateGenerator } from "@shared/utils/date-generator";
 import { ListEventsUsecase } from "./list-events.usecase";
 import { EventProps } from "@events/application/domain/entities/event.entity";
 

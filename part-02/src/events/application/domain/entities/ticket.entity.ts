@@ -1,6 +1,6 @@
-import { UUIDGenerator } from "@events/utils/uuid-generator";
-import { Event, EventProps } from "./event.entity";
-import { DateGenerator } from "@events/utils/date-generator";
+import { UUIDGenerator } from "@shared/utils/uuid-generator";
+import { Event, EventProps, EventWithDto } from "./event.entity";
+import { DateGenerator } from "@shared/utils/date-generator";
 
 export enum TicketStatus {
   CREATED = 'CREATED',
@@ -40,7 +40,7 @@ export type TicketCreateDto = {
 export type TicketWithDto = {
   id: string;
   userId: string;
-  event: Event;
+  event: EventWithDto;
   price: number;
   status: TicketStatus;
   customerEmail: string;
@@ -112,6 +112,14 @@ export class Ticket {
       createdAt: this.props.createdAt,
       updatedAt: this.props.updatedAt,
     }
+  }
+
+  public paid(): void {
+    this.props.status = TicketStatus.PAID;
+  }
+
+  public failed(): void {
+    this.props.status = TicketStatus.FAILED;
   }
 
   public get id(): string {

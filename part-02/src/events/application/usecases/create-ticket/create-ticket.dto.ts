@@ -3,16 +3,13 @@ import { TicketStatus } from "@events/application/domain/entities/ticket.entity"
 import { Messaging } from "@events/application/messaging/messaging";
 import { EventRepository } from "@events/application/repositories/event.repository";
 import { TicketRepository } from "@events/application/repositories/ticket.repository";
-
-export enum PaymentMethod {
-  CARD = 'CARD',
-  PIX = 'PIX',
-}
+import { UnityOfWork } from "@shared/unity-of-work/unity-of-work";
 
 export type CreateTicketBuildDto = {
   eventRepository: EventRepository;
   ticketRepository: TicketRepository;
   messaging: Messaging;
+  unityOfWork: UnityOfWork;
 }
 
 export type CreateTicketInputDto = {

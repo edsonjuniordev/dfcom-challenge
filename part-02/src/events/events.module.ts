@@ -2,16 +2,15 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { EventController } from "./infra/controllers/event.controller";
-import { CreateEventUsecaseProvider } from "./infra/controllers/providers/create-event.provider";
-import { ListEventsUsecaseProvider } from "./infra/controllers/providers/list-events.provider";
 import { TicketController } from "./infra/controllers/ticket.controller";
-import { DatabaseModule } from "./infra/database/database.module";
-import { CreateTicketUsecaseProvider } from "./infra/controllers/providers/create-ticket.provider";
 import { MessagingModule } from "./infra/messaging/messaging.module";
+import { CreateEventUsecaseProvider } from "./infra/providers/create-event.provider";
+import { CreateTicketUsecaseProvider } from "./infra/providers/create-ticket.provider";
+import { ListEventsUsecaseProvider } from "./infra/providers/list-events.provider";
+import { UpdateTicketStatusUsecaseProvider } from "./infra/providers/update-ticket-status.provider";
 
 @Module({
   imports: [
-    DatabaseModule,
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
         global: true,
@@ -25,7 +24,8 @@ import { MessagingModule } from "./infra/messaging/messaging.module";
   providers: [
     CreateEventUsecaseProvider,
     ListEventsUsecaseProvider,
-    CreateTicketUsecaseProvider
+    CreateTicketUsecaseProvider,
+    UpdateTicketStatusUsecaseProvider,
   ],
   controllers: [TicketController, EventController]
 })

@@ -1,11 +1,12 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { Event } from "@events/application/domain/entities/event.entity";
 import { EventRepository } from "@events/application/repositories/event.repository";
-import { Model } from "mongoose";
+import { ClientSession, Model } from "mongoose";
 import { EventModel } from "../models/event.model";
 import { EventEntityToModelMapper } from "./mappers/event-entity-to-model.mapper";
 import { EventModelToEntity } from "./mappers/event-model-to-entity.mapper";
 import { Injectable } from "@nestjs/common";
+import { Work } from "@shared/unity-of-work/unity-of-work";
 
 @Injectable()
 export class EventMongoRepository implements EventRepository {
@@ -50,12 +51,18 @@ export class EventMongoRepository implements EventRepository {
     return aEntity;
   }
 
-  public async update(event: Event): Promise<void> {
-    const aModel = EventEntityToModelMapper.map(event);
+  public update(event: Event): Work {
+    const work = async (session: ClientSession) => {
+      const aModel = EventEntityToModelMapper.map(event);
 
-    await this.eventModel.updateOne({
-      id: event.id
-    }, aModel);
+      await this.eventModel.updateOne({
+        id: event.id
+      }, aModel, {
+        session
+      });
+    }
+
+    return work;
   };
 
   public async unlock(eventId: string): Promise<void> {

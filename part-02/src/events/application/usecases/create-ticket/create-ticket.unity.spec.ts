@@ -1,4 +1,4 @@
-import { DateGenerator } from "@events/utils/date-generator";
+import { DateGenerator } from "@shared/utils/date-generator";
 import { EventRepository } from "@events/application/repositories/event.repository";
 import { CreateTicketBuildDto, CreateTicketInputDto, CreateTicketOutputDto } from "./create-ticket.dto";
 import { Messaging } from "@events/application/messaging/messaging";
@@ -6,6 +6,7 @@ import { TicketStatus } from "@events/application/domain/entities/ticket.entity"
 import { CreateTicketUsecase } from "./create-ticket.usecase";
 import { EventProps } from "@events/application/domain/entities/event.entity";
 import { TicketRepository } from "@events/application/repositories/ticket.repository";
+import { UnityOfWork } from "@shared/unity-of-work/unity-of-work";
 
 describe("create-ticket usecase", () => {
   let buildMock: CreateTicketBuildDto;
@@ -17,6 +18,7 @@ describe("create-ticket usecase", () => {
   let eventRepositoryMock: EventRepository;
   let ticketRepositoryMock: TicketRepository;
   let messagingMock: Messaging;
+  let unitOfWorkMock: UnityOfWork;
 
   beforeEach(() => {
     const now = DateGenerator.now();
@@ -67,17 +69,27 @@ describe("create-ticket usecase", () => {
     };
 
     ticketRepositoryMock = {
-      create: jest.fn().mockResolvedValue(null)
+      create: jest.fn().mockResolvedValue(null),
+      findById: jest.fn(),
+      update: jest.fn()
     }
 
     messagingMock = {
       sendTicketCreatedEvent: jest.fn().mockResolvedValue(null)
     }
 
+    unitOfWorkMock = {
+      abort: jest.fn().mockResolvedValue(null),
+      addWork: jest.fn(),
+      commit: jest.fn().mockResolvedValue(null),
+      start: jest.fn().mockResolvedValue(null)
+    }
+
     buildMock = {
       eventRepository: eventRepositoryMock,
       ticketRepository: ticketRepositoryMock,
-      messaging: messagingMock
+      messaging: messagingMock,
+      unityOfWork: unitOfWorkMock
     };
   })
 
@@ -132,11 +144,11 @@ describe("create-ticket usecase", () => {
     })
 
     it("should throw an exception", async () => {
-      jest.spyOn(ticketRepositoryMock, "create").mockRejectedValueOnce(new Error());
+      jest.spyOn(messagingMock, "sendTicketCreatedEvent").mockRejectedValueOnce(new Error());
 
       const createTicketUsecase = CreateTicketUsecase.build(buildMock);
 
-      expect(createTicketUsecase.execute(inputMock)).rejects.toThrow(`Something went wrong while creating ticket for event ${inputMock.eventId}`);
+      expect(createTicketUsecase.execute(inputMock)).rejects.toThrow();
     })
   })
 

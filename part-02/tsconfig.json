@@ -21,6 +21,12 @@
       "@events/*": [
         "src/events/*"
       ],
+      "@payments/*": [
+        "src/payments/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
     }
   }
 }

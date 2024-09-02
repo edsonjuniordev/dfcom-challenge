@@ -1,5 +1,5 @@
-import { DateGenerator } from "@events/utils/date-generator";
-import { UUIDGenerator } from "@events/utils/uuid-generator";
+import { DateGenerator } from "@shared/utils/date-generator";
+import { UUIDGenerator } from "@shared/utils/uuid-generator";
 
 export type EventProps = {
   id: string;

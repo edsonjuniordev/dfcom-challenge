@@ -59,7 +59,9 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "@events/(.*)": "<rootDir>/events/$1"
+      "@events/(.*)": "<rootDir>/events/$1",
+      "@payments/(.*)": "<rootDir>/payments/$1",
+      "@shared/(.*)": "<rootDir>/shared/$1"
     },
     "moduleFileExtensions": [
       "js",

@@ -1,6 +1,6 @@
 import { CreateEventUsecase } from "./create-event.usecase"
 import { CreateEventBuildDto, CreateEventInputDto, CreateEventOutputDto } from "./create-event.dto";
-import { DateGenerator } from "@events/utils/date-generator";
+import { DateGenerator } from "@shared/utils/date-generator";
 import { EventRepository } from "@events/application/repositories/event.repository";
 
 describe("create-event usecase", () => {

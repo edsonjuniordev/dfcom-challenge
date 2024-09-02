@@ -13,7 +13,7 @@ export class TicketModel {
   @Prop({
     type: Types.ObjectId,
     ref: 'events',
-    required: true
+    required: false
   })
   event: Types.ObjectId;
 
