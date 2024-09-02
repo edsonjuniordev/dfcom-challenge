@@ -18,7 +18,7 @@ Uma arquitetura de microsserviços nos permite escalar diferentes partes de um s
 
 ### 2.2 Cache distribuído
 
-Uma implementação de cache distribuído nos ajuda a armazenas dados frequentemente acessados (disponibilidade de ingressos e preços) e também melhora o desempenho da aplicação durate picos de acessos.
+Uma implementação de cache distribuído nos ajuda a armazenar dados frequentemente acessados (disponibilidade de ingressos e preços) e também melhora o desempenho da aplicação durate picos de acessos.
 
 ### 2.3 Banco de Dados
 
@@ -36,7 +36,7 @@ O uso de sockets possibilita que o painel de administração seja em tempo real,
 
 ### 3.1 Backend
 
-Será utilizado o ecossistema Nodejs, mas especificamente seu framework Nestjs, por ser um framework bem robusto, modularizado, validado no mercado e possui uma grande gama de funcionalidades que nos ajuda a implementar as necessidades do negócio. 
+Será utilizado o ecossistema Nodejs, mas especificamente seu framework Nestjs, por ser um framework robusto, modularizado, validado no mercado e possuir uma grande gama de funcionalidades que nos ajuda a implementar as necessidades do negócio. 
 
 Para o sistema de cache distribuído será utilizado o Redis, por sua facilidade de uso e velocidade nas consultas e escritas.
 
@@ -46,7 +46,7 @@ Para o sistema de mensageria será utilizado o Kafka, pois ele persiste as mensa
 
 ### 3.2 Frontend
 
-O framework Nextjs será escolhido pela sua capacidade de SSR, na qual garante mais segurança à páginas mais sensíveis.
+O framework Nextjs será escolhido pela sua capacidade de SSR, que garante mais segurança à páginas mais sensíveis.
 
 ## 4. Estratégias de Resiliência
 
