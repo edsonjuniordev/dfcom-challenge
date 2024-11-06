@@ -35,6 +35,7 @@ export class CreateTicketUsecase implements Usecase<CreateTicketInputDto, Create
     }
 
     if (event.isFull()) {
+      await this.eventRepository.unlock(eventId);
       throw new Error(`Event ${eventId} is full`);
     }
 
